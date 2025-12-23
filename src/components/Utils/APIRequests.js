@@ -209,3 +209,34 @@ export const perfectMinigameLeaderboardRequest = async () => {
     throw error;
   }
 };
+
+export async function getMetamaskNonce(address) {
+  try {
+    const { data } = await axios.get(
+      `${API_BASE_URL}/user/metamask/nonce/${address}`
+    );
+    return data;
+  } catch (error) {
+    console.error('Error getting MetaMask nonce:', error);
+    throw error;
+  }
+}
+
+export async function verifyMetamaskSignature(address, signature, message) {
+  try {
+    const { data } = await axios.post(
+      `${API_BASE_URL}/user/metamask/verify`,
+      { address, signature, message }
+    );
+    if (data.token) {
+      window.sessionStorage.setItem("token", data.token);
+      const { id, user_money, username } = data;
+      useUserState.getState().setUser(id, user_money, username);
+      useUserState.getState().setIsLoggedIn(true);
+    }
+    return data;
+  } catch (error) {
+    console.error('Error verifying MetaMask signature:', error);
+    throw error;
+  }
+}

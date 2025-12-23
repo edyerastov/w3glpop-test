@@ -130,10 +130,60 @@ async function editUserQuery(reqBody, reqUser) {
    }
 }
 
+async function findOrCreateUserByWallet(walletAddress) {
+    try {
+        // Normalize wallet address to lowercase for comparison
+        const normalizedAddress = walletAddress.toLowerCase();
+        
+        // First, try to find existing user by wallet address
+        const findSQL = `SELECT * FROM users WHERE LOWER(wallet_address)=$1;`;
+        const findResponse = await client.run(findSQL, [normalizedAddress]);
+        
+        if (findResponse.rows && findResponse.rows.length > 0) {
+            return findResponse.rows[0];
+        }
+        
+        // Create new user if not found
+        // Generate unique username and email based on wallet address
+        const usernameBase = `wallet_${normalizedAddress.slice(2, 10)}`;
+        let username = usernameBase;
+        let counter = 1;
+        
+        // Check if username already exists and append counter if needed
+        while (true) {
+            const usernameCheckSQL = `SELECT id FROM users WHERE username=$1;`;
+            const usernameCheck = await client.run(usernameCheckSQL, [username]);
+            if (!usernameCheck.rows || usernameCheck.rows.length === 0) {
+                break;
+            }
+            username = `${usernameBase}_${counter}`;
+            counter++;
+        }
+        
+        const email = `${normalizedAddress}@metamask.local`;
+        // Use a placeholder password for wallet users (they authenticate via signature)
+        const password = `wallet_${normalizedAddress}_no_password`;
+        const money = 5000;
+        const is_admin = false;
+        
+        const createSQL = `INSERT INTO users(id, username, email, password, user_money, is_admin, wallet_address) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`;
+        const createResponse = await client.run(createSQL, [uuid.v4(), username, email, password, money, is_admin, normalizedAddress]);
+        
+        if (!createResponse.rows || !createResponse.rows.length) {
+            throw new Error('Failed to create user - no data returned');
+        }
+        
+        return createResponse.rows[0];
+    } catch (error) {
+        throw new Error(`Error finding or creating user by wallet: ${error.message}`);
+    }
+}
+
 module.exports = {
     registerQuery, 
     loginQuery,
     findUserWithToken,
     getUserInfoQuery,
-    editUserQuery
+    editUserQuery,
+    findOrCreateUserByWallet
 }

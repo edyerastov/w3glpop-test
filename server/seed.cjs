@@ -13,7 +13,8 @@ async function createTables() {
     user_money INTEGER NOT NULL,
     wins INTEGER default 0,
     losses INTEGER default 0,
-    is_admin BOOLEAN default false
+    is_admin BOOLEAN default false,
+    wallet_address TEXT
     );
     CREATE TABLE IF NOT EXISTS transactions(
     transaction_id UUID PRIMARY KEY,

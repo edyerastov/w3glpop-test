@@ -2,7 +2,8 @@ import { useState } from 'react';
 import './LoginRegister.css';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { loginUser, registerUser } from '../Utils/APIRequests';
+import { loginUser, registerUser, getMetamaskNonce, verifyMetamaskSignature } from '../Utils/APIRequests';
+import { ethers } from 'ethers';
 
 export default function LoginRegister() {
   const [signIn, setSignIn] = useState(true);
@@ -33,6 +34,41 @@ export default function LoginRegister() {
     },
     onError: (error) => {
       console.error('Login error:', error);
+    }
+  })
+
+  const metamaskMutation = useMutation({
+    mutationFn: async () => {
+      // Check if MetaMask is installed
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed. Please install MetaMask to continue.');
+      }
+
+      // Request account access
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      const address = accounts[0];
+
+      if (!address) {
+        throw new Error('No account selected');
+      }
+
+      // Get nonce from backend
+      const { message } = await getMetamaskNonce(address);
+
+      // Request user to sign the message
+      const signer = await provider.getSigner();
+      const signature = await signer.signMessage(message);
+
+      // Verify signature with backend
+      return await verifyMetamaskSignature(address, signature, message);
+    },
+    onSuccess: () => {
+      navigate('/cashier');
+    },
+    onError: (error) => {
+      console.error('MetaMask authentication error:', error);
+      alert(error.response?.data?.error || error.message || 'MetaMask authentication failed');
     }
   })
 
@@ -72,6 +108,22 @@ export default function LoginRegister() {
           <input type='email' placeholder='Email' name='email' className="input" onChange={handleSignUpFormChange} required/>
           <input type='password' placeholder='Password' name='password' className="input" onChange={handleSignUpFormChange} required/>
           <button className="button">Sign Up</button>
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ margin: '15px 0', color: '#aaa' }}>or</div>
+            <button 
+              type="button" 
+              className="button" 
+              onClick={() => metamaskMutation.mutate()}
+              disabled={metamaskMutation.isPending}
+              style={{ 
+                backgroundColor: '#f6851b', 
+                width: '100%',
+                cursor: metamaskMutation.isPending ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {metamaskMutation.isPending ? 'Connecting...' : 'Sign up with MetaMask'}
+            </button>
+          </div>
         </form>
       </div>
 
@@ -81,6 +133,22 @@ export default function LoginRegister() {
           <input type='text' placeholder='Username' name='username' className="input" onChange={handleSignInFormChange} required/>
           <input type='password' placeholder='Password' name='password' className="input" onChange={handleSignInFormChange} required/>
           {loginMutation.isPending ? <div>loading</div>: <button className="button">Sign In</button>}
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ margin: '15px 0', color: '#aaa' }}>or</div>
+            <button 
+              type="button" 
+              className="button" 
+              onClick={() => metamaskMutation.mutate()}
+              disabled={metamaskMutation.isPending}
+              style={{ 
+                backgroundColor: '#f6851b', 
+                width: '100%',
+                cursor: metamaskMutation.isPending ? 'not-allowed' : 'pointer'
+              }}
+            >
+              {metamaskMutation.isPending ? 'Connecting...' : 'Sign in with MetaMask'}
+            </button>
+          </div>
         </form>
       </div>
 

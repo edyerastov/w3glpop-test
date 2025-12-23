@@ -1,11 +1,14 @@
 const { express } = require('../shared.cjs');
 const router = express.Router();
-const { register, login, getUserInfo, editUser } = require('../controllers/userControllers.cjs');
+const { register, login, getUserInfo, editUser, getMetamaskNonce, verifyMetamaskSignature } = require('../controllers/userControllers.cjs');
 const { isLoggedIn } = require('../middleware/authMiddleware.cjs')
 
 
 router.post("/register", register);
 router.post("/login", login);
+
+router.get("/metamask/nonce/:address", getMetamaskNonce);
+router.post("/metamask/verify", verifyMetamaskSignature);
 
 router.get("/auth", isLoggedIn, async (req, res, next) => {
     try {
