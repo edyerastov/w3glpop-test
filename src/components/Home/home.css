@@ -2,11 +2,12 @@
   color: #f5f5f5;
   font-family: 'Playfair Display', serif;
   background-image: url('../Slots/assets/images/image.png');
-  background-size: cover; /* Ensures the background covers the whole area */
-  background-attachment: fixed; /* Fixes the background image position */
+  background-size: cover;
+  background-attachment: fixed;
   background-position: center;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
 .welcome-section {
@@ -55,10 +56,13 @@
   margin: 0 auto;
   color: #f5f5f5;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  line-height: 1.6;
 }
 
 .home-links {
   color: #F0E68C;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .home-links:hover {
@@ -70,77 +74,100 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
 }
 
 .Home-content-2{
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
 }
 
 .blackjack-mini-game {
-  width: 800px;
-  height: 220px;
+  max-width: 800px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
   padding: 20px;
   margin: 20px 0;
   border: 2px solid #B8860B;
   border-radius: 8px;
   background: #000000b2;
+  box-sizing: border-box;
 }
 
 .leaderboards{
-  width: 715px;
-  height: 220px;
+  max-width: 715px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
   padding: 20px;
   margin-top: 20px;
-  margin-right: 70px;
   border: 2px solid #B8860B;
   border-radius: 8px;
   background: #000000b2;
+  box-sizing: border-box;
 }
 
 .guest-access{
-  width: 480px;
-  height: 220px;
+  max-width: 480px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
   padding: 20px;
   margin-top: 20px;
-  margin-left: 20px;
   border: 2px solid #B8860B;
   border-radius: 8px;
   background: #000000b2;
+  box-sizing: border-box;
 }
 
 .registered-user-benefits{
-  width: 500px;
-  height: 220px;
+  max-width: 500px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
   padding: 20px;
   margin-top: 20px;
-  margin-left: 20px;
   border: 2px solid #B8860B;
   border-radius: 8px;
   background: #000000b2;
+  box-sizing: border-box;
 }
 
 .account-info-stats{
-  width: 570px;
-  height: 220px;
+  max-width: 570px;
+  min-width: 300px;
+  width: 100%;
+  height: auto;
+  min-height: 220px;
   padding: 20px;
   margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
   border: 2px solid #B8860B;
   border-radius: 8px;
   background: #000000b2;
+  box-sizing: border-box;
 }
 
 .guest-access h2, .registered-user-benefits h2, .account-info-stats h2, .leaderboards h2, .blackjack-mini-game h2 {
   font-size: 1.8rem;
   margin-bottom: 10px;
   color: #F0E68C;
+  line-height: 1.3;
 }
 
 .guest-access p, .registered-user-benefits p, .account-info-stats p, .leaderboards p, .blackjack-mini-game p {
   font-size: 1rem;
+  line-height: 1.5;
 }
 
 .cta-section {
@@ -158,10 +185,12 @@
   display: flex;
   justify-content: center;
   gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
 }
 
 .cta-button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-family: 'Times New Roman', serif;
   font-size: 18px;
   font-weight: bold;
@@ -173,12 +202,18 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 120px;
 }
 
 .cta-button:hover {
   background-color: #2C2C2C;
   border-color: rgba(255, 174, 55, 0.6);
   box-shadow: 0 0 15px 5px rgba(255, 174, 55, 0.75);
+  transform: translateY(-2px);
+}
+
+.cta-button:active {
+  transform: translateY(0);
 }
 
 .home-end-section {
@@ -186,15 +221,19 @@
   border: 2px solid #B8860B;
   border-radius: 8px;
   text-align: center;
+  max-width: 90%;
   width: 70%;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 1rem;
-  padding: 10px;
+  margin: 20px auto 1rem;
+  padding: 15px;
   color: #F0E68C;
+  line-height: 1.6;
+  box-sizing: border-box;
 }
 
 @media (max-width: 1440px) {
+  .landing-page {
+    background-attachment: fixed;
+  }
 
   .welcome-section {
     padding: 90px 20px;
@@ -215,9 +254,7 @@
 
   .Home-content-1,
   .Home-content-2 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+    padding: 15px;
   }
 
   .blackjack-mini-game,
@@ -225,39 +262,22 @@
   .guest-access,
   .registered-user-benefits,
   .account-info-stats {
-    width: 400px;
-    height: auto;
-  }
-
-  .cta-buttons {
-    flex-direction: row;
-  }
-
-  .cta-button {
-    font-size: 17px;
+    max-width: 450px;
+    margin: 15px 0;
   }
 
   .home-end-section {
     width: 85%;
-    padding: 15px;
   }
 }
 
-
 @media (max-width: 1024px) {
-
-  .cta-buttons {
-    display: flex;
-    flex-direction: row;
+  .landing-page {
+    background-attachment: scroll;
   }
 
-  .cta-button {
-    display: flex;
-    flex-direction: row;
-  }
-  
   .welcome-section {
-    padding: 80px 15px;
+    padding: 70px 15px;
   }
 
   .welcome-section h1 {
@@ -270,13 +290,14 @@
 
   .welcome-section p {
     font-size: 1rem;
-    width: 90%;
+    width: 85%;
   }
 
   .Home-content-1,
   .Home-content-2 {
     flex-direction: column;
     align-items: center;
+    padding: 15px;
   }
 
   .blackjack-mini-game,
@@ -284,31 +305,61 @@
   .guest-access,
   .registered-user-benefits,
   .account-info-stats {
-    width: 90%;
-    height: auto;
-    margin: 10px 0;
+    max-width: 90%;
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  .guest-access h2, .registered-user-benefits h2, .account-info-stats h2, 
+  .leaderboards h2, .blackjack-mini-game h2 {
+    font-size: 1.6rem;
+  }
+
+  .guest-access p, .registered-user-benefits p, .account-info-stats p, 
+  .leaderboards p, .blackjack-mini-game p {
+    font-size: 0.95rem;
   }
 
   .home-end-section {
     width: 90%;
+    padding: 12px;
+  }
+
+  .cta-button {
+    font-size: 17px;
+    padding: 11px 22px;
   }
 }
 
 @media (max-width: 768px) {
+  .landing-page {
+    background-attachment: scroll;
+  }
+
   .welcome-section {
-    padding: 60px 10px;
+    padding: 50px 15px;
   }
 
   .welcome-section h1 {
     font-size: 1.8rem;
+    margin-bottom: 15px;
   }
 
   .welcome-section h2 {
     font-size: 1.4rem;
+    margin-bottom: 15px;
   }
 
   .welcome-section p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    width: 95%;
+    line-height: 1.5;
+  }
+
+  .Home-content-1,
+  .Home-content-2 {
+    padding: 10px;
+    gap: 15px;
   }
 
   .blackjack-mini-game,
@@ -316,49 +367,155 @@
   .guest-access,
   .registered-user-benefits,
   .account-info-stats {
+    max-width: 100%;
     width: 100%;
+    margin: 10px 0;
+    padding: 15px;
+    min-height: auto;
+  }
+
+  .guest-access h2, .registered-user-benefits h2, .account-info-stats h2, 
+  .leaderboards h2, .blackjack-mini-game h2 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .guest-access p, .registered-user-benefits p, .account-info-stats p, 
+  .leaderboards p, .blackjack-mini-game p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .cta-buttons {
+    flex-direction: row;
+    gap: 15px;
+    padding: 15px;
   }
 
   .cta-button {
     font-size: 16px;
+    padding: 10px 20px;
+    min-width: 110px;
   }
 
-  .cta-buttons {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .cta-button {
-    display: flex;
-    flex-direction: row;
+  .home-end-section {
+    width: 95%;
+    padding: 12px;
+    font-size: 0.95rem;
+    margin: 15px auto 1rem;
   }
 }
 
 @media (max-width: 480px) {
+  .landing-page {
+    background-attachment: scroll;
+  }
+
   .welcome-section {
-    padding: 40px 5px;
+    padding: 40px 10px;
   }
 
   .welcome-section h1 {
     font-size: 1.5rem;
+    margin-bottom: 12px;
   }
 
   .welcome-section h2 {
     font-size: 1.2rem;
+    margin-bottom: 12px;
   }
 
   .welcome-section p {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     width: 100%;
+    line-height: 1.4;
+  }
+
+  .Home-content-1,
+  .Home-content-2 {
+    padding: 10px 5px;
+    gap: 10px;
+  }
+
+  .blackjack-mini-game,
+  .leaderboards,
+  .guest-access,
+  .registered-user-benefits,
+  .account-info-stats {
+    padding: 12px;
+    margin: 8px 0;
+    border-width: 1.5px;
+  }
+
+  .guest-access h2, .registered-user-benefits h2, .account-info-stats h2, 
+  .leaderboards h2, .blackjack-mini-game h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .guest-access p, .registered-user-benefits p, .account-info-stats p, 
+  .leaderboards p, .blackjack-mini-game p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px 10px;
   }
 
   .cta-button {
-    font-size: 14px;
-    padding: 8px 15px;
+    font-size: 15px;
+    padding: 10px 18px;
+    width: 100%;
+    max-width: 200px;
+    min-width: auto;
   }
 
   .home-end-section {
     width: 100%;
+    padding: 10px;
+    font-size: 0.85rem;
+    margin: 15px auto 1rem;
+    border-width: 1.5px;
+  }
+}
+
+@media (max-width: 320px) {
+  .welcome-section {
+    padding: 30px 8px;
+  }
+
+  .welcome-section h1 {
+    font-size: 1.3rem;
+  }
+
+  .welcome-section h2 {
+    font-size: 1.1rem;
+  }
+
+  .welcome-section p {
+    font-size: 0.8rem;
+  }
+
+  .guest-access h2, .registered-user-benefits h2, .account-info-stats h2, 
+  .leaderboards h2, .blackjack-mini-game h2 {
+    font-size: 1.1rem;
+  }
+
+  .guest-access p, .registered-user-benefits p, .account-info-stats p, 
+  .leaderboards p, .blackjack-mini-game p {
+    font-size: 0.8rem;
+  }
+
+  .cta-button {
+    font-size: 14px;
+    padding: 9px 16px;
+  }
+
+  .home-end-section {
+    font-size: 0.8rem;
     padding: 8px;
   }
 }
