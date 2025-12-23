@@ -1,12 +1,15 @@
 import axios from "axios";
 import useUserState from "../../store/store";
 
+// Базовый URL API - используем локальный сервер в режиме разработки
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
+
 
 export async function addTransaction(transaction) {
   try {
     const token = window.sessionStorage.getItem("token");
     const { data } = await axios.post(
-      "https://capstone-casino-backend.onrender.com/transaction/add",
+      `${API_BASE_URL}/transaction/add`,
       transaction,
       {
         headers: {
@@ -24,7 +27,7 @@ export async function addMiniGame(miniGame) {
   try {
     const token = window.sessionStorage.getItem("token");
     const { data } = await axios.post(
-      "https://capstone-casino-backend.onrender.com/transaction/add",
+      `${API_BASE_URL}/transaction/add`,
       miniGame,
       {
         headers: {
@@ -43,7 +46,7 @@ export async function addMiniGame(miniGame) {
 export async function registerUser(formData) {
   try {
     const {data} = await axios.post(
-      "https://capstone-casino-backend.onrender.com/user/register",
+      `${API_BASE_URL}/user/register`,
       formData
     );
     if (data.token) {
@@ -62,7 +65,7 @@ export async function registerUser(formData) {
 export async function loginUser(formData) {
   try {
       const { data } = await axios.post(
-          "https://capstone-casino-backend.onrender.com/user/login",
+          `${API_BASE_URL}/user/login`,
           formData
       );
     if (data.token) {
@@ -81,7 +84,7 @@ export async function loginUser(formData) {
 export async function betLeaderboardRequest() {
   try {
     const { data } = await axios.get(
-      "https://capstone-casino-backend.onrender.com/leaderboard/transaction"
+      `${API_BASE_URL}/leaderboard/transaction`
     );
     return data;
   } catch (error) {
@@ -92,7 +95,7 @@ export async function betLeaderboardRequest() {
 export async function recordLeaderboardRequest() {
   try {
     const { data } = await axios.get(
-      "https://capstone-casino-backend.onrender.com/leaderboard/user/record"
+      `${API_BASE_URL}/leaderboard/user/record`
     );
     return data;
   } catch (error) {
@@ -103,7 +106,7 @@ export async function recordLeaderboardRequest() {
 export async function moneyLeaderboardRequest() {
   try {
     const { data } = await axios.get(
-      "https://capstone-casino-backend.onrender.com/leaderboard/user"
+      `${API_BASE_URL}/leaderboard/user`
     );
     return data;
   } catch (error) {
@@ -115,7 +118,7 @@ export async function moneyLeaderboardRequest() {
 export async function authorizeUserRequest() {
   try {
     const token = window.sessionStorage.getItem("token");
-    const { data } = await axios.get("https://capstone-casino-backend.onrender.com/user", 
+    const { data } = await axios.get(`${API_BASE_URL}/user`, 
       {
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +135,7 @@ export async function authorizeUserRequest() {
 export async function getMiniGameStats(id) {
   try {
     const token = window.sessionStorage.getItem("token");
-    const { data } = await axios.get(`https://capstone-casino-backend.onrender.com/transaction/minigame/history/${id}`, 
+    const { data } = await axios.get(`${API_BASE_URL}/transaction/minigame/history/${id}`, 
       {
         headers: {
           'Content-Type': 'application/json',
@@ -149,7 +152,7 @@ export async function getMiniGameStats(id) {
 export async function editUserRequest(user) {
   try {
     const token = window.sessionStorage.getItem("token");
-    const { data } = await axios.put("https://capstone-casino-backend.onrender.com/user/edit",
+    const { data } = await axios.put(`${API_BASE_URL}/user/edit`,
     user,
       {
         headers: {
@@ -167,7 +170,7 @@ export async function editUserRequest(user) {
 
 export async function getUserBetSlipsRequest(gameSelection, winOrLoss) {
   try {
-    const url = `https://capstone-casino-backend.onrender.com/transaction/history/${gameSelection}/${winOrLoss}`;
+    const url = `${API_BASE_URL}/transaction/history/${gameSelection}/${winOrLoss}`;
     const token = window.sessionStorage.getItem("token");
     const { data } = await axios.get(url, {
       headers: {
@@ -186,7 +189,7 @@ export async function getUserBetSlipsRequest(gameSelection, winOrLoss) {
 export const minigameLeaderboardRequest = async () => {
   try {
     const { data } = await axios.get(
-      "https://capstone-casino-backend.onrender.com/leaderboard/minigame"
+      `${API_BASE_URL}/leaderboard/minigame`
     );
     return data;
   } catch (error) {
@@ -198,7 +201,7 @@ export const minigameLeaderboardRequest = async () => {
 export const perfectMinigameLeaderboardRequest = async () => {
   try {
     const { data } = await axios.get(
-      "https://capstone-casino-backend.onrender.com/leaderboard/minigame/perfect"
+      `${API_BASE_URL}/leaderboard/minigame/perfect`
     );
     return data;
   } catch (error) {

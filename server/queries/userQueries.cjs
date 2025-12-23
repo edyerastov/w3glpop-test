@@ -12,6 +12,9 @@ async function registerQuery(reqBody) {
             }
         const SQL = `INSERT INTO users(id, username, email, password, user_money, is_admin) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
         const response = await client.run(SQL, [uuid.v4(), username, email, hashedPassword, money, is_admin]);
+        if (!response.rows || !response.rows.length) {
+            throw new Error('Failed to create user - no data returned');
+        }
         const token = await jwt.sign({ id: response.rows[0].id }, JWT, { expiresIn: '5h' });
         return { ...response.rows[0], token };
     } catch (error) {

@@ -9,4 +9,13 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: true,
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })
